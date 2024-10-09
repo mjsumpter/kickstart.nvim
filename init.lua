@@ -723,6 +723,20 @@ require('lazy').setup({
         else
           lsp_format_opt = 'fallback'
         end
+
+        -- Rust should always format on save
+        if vim.bo[bufnr].filetype == 'rust' then
+          lsp_format_opt = 'always'
+        end
+
+        -- For JavaScript/TypeScript, format with Prettier only if config exists
+        if vim.bo[bufnr].filetype == 'javascript' or vim.bo[bufnr].filetype == 'typescript' then
+          local prettier_config = vim.fn.glob '.prettierrc*'
+          if prettier_config == '' then
+            lsp_format_opt = 'never'
+          end
+        end
+
         return {
           timeout_ms = 500,
           lsp_format = lsp_format_opt,
@@ -730,13 +744,9 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        rust = { 'rustfmt', lsp_format = 'fallback' },
+        rust = { 'rustfmt', lsp_format = 'always' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
       },
     },
   },
