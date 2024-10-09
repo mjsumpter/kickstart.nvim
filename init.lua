@@ -1010,6 +1010,7 @@ require('lazy').setup({
 -- Custom Keybindings
 vim.keymap.set('n', '<leader>tf', ':NvimTreeToggle<CR>', { desc = 'Toggle File Tree' })
 vim.keymap.set('n', '<leader>tt', ':split | terminal<CR>', { noremap = true, silent = true, desc = 'Open Terminal' })
+vim.keymap.set('n', '<leader>g', ':Neogit<CR>', { desc = 'Open Neogit' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
