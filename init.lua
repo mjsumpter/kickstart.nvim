@@ -972,7 +972,7 @@ require('lazy').setup({
 
 -- Custom Keybindings
 vim.keymap.set('n', '<leader>tf', ':NvimTreeToggle<CR>', { desc = 'Toggle File Tree' })
-vim.keymap.set('n', '<leader>tt', ':split | terminal<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>tt', ':split | terminal<CR>', { noremap = true, silent = true, desc = 'Open Terminal' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
