@@ -467,6 +467,30 @@ require('lazy').setup({
     },
     config = true,
   },
+  {
+    'sbdchd/neoformat',
+    config = function()
+      -- Ensure Neoformat uses the local Prettier from node_modules if available
+      vim.g.neoformat_try_node_exe = 1
+
+      -- Function to check for Prettier config
+      function FormatIfPrettierConfigExists()
+        local prettier_configs = { '.prettierrc', '.prettierrc.json', '.prettierrc.js', 'prettier.config.js', '.prettierrc.yaml', '.prettierrc.yml' }
+        for _, config in ipairs(prettier_configs) do
+          if vim.fn.filereadable(vim.fn.getcwd() .. '/' .. config) == 1 then
+            vim.cmd 'Neoformat prettier'
+            return
+          end
+        end
+      end
+
+      -- Format on save, but only if Prettier config exists
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = { '*.js', '*.ts', '*.jsx', '*.tsx' },
+        callback = FormatIfPrettierConfigExists,
+      })
+    end,
+  },
 
   -- LSP Plugins
   {
