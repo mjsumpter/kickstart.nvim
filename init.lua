@@ -451,20 +451,7 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      local function my_on_attach(bufnr)
-        local api = require 'nvim-tree.api'
-
-        local function opts(desc)
-          return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-        end
-
-        api.config.mappings.default_on_attach(bufnr)
-
-        vim.keymap.set('n', '<leader>tf', api.tree.toggle, opts 'Toggle Tree')
-      end
-      require('nvim-tree').setup {
-        on_attach = my_on_attach,
-      }
+      require('nvim-tree').setup {}
     end,
   },
 
@@ -982,6 +969,10 @@ require('lazy').setup({
     },
   },
 })
+
+-- Custom Keybindings
+vim.keymap.set('n', '<leader>tf', ':NvimTreeToggle<CR>', { desc = 'Toggle File Tree' })
+vim.keymap.set('n', '<leader>tt', ':split | terminal<CR>', { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
